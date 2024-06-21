@@ -1,6 +1,8 @@
 import allure
 import pytest_check as check
-from locators.maine_page import MainPage
+
+from conftest import web_browser
+from locators.main_page import MainPage
 
 
 @allure.story('Тест для проверки главной страницы')
@@ -19,28 +21,36 @@ def test_maine_headers(web_browser):
         (locators.btn_press_center, "Пресс-центр")
     ]
 
+def test_headers(web_browser, header_elements):
+
     for elements, elements_text in header_elements:
         check.is_true(elements.is_visible())
         check.is_true(elements.is_clickable())
         check.equal(elements.get_text(), elements_text)
 
+
 @allure.story('Тест для проверки главной страницы')
-@allure.feature('Тест для проверки адреса ссылок')
+@allure.feature('Тест для проверки адресса ссылок')
 def test_headers_link(web_browser):
     "Этот тест проверяет адреса ссылок хедера главной страницы"
 
+locators = MainPage(web_browser)
 
-    locators = MainPage(web_browser)
+link_header_elements = [
+    (locators.btn_home_link, 'https://www.rw.by/'),
+    (locators.btn_contacts_link, 'https://www.rw.by/corporate/contacts/'),
+    (locators.btn_services_to_passengers_link, 'https://pass.rw.by/ru/'),
+    (locators.btn_freight_transportation_link, 'https://www.rw.by/cargo_transportation/'),
+    (locators.btn_tourism_and_rest, 'https://www.rw.by/tourism_and_recreation/'),
+    (locators.btn_corporate, 'https://www.rw.by/corporate/'),
+    (locators.btn_press_center, 'https://www.rw.by/corporate/press_center/')
+]
 
-    link_header_elements = [
-        (locators.btn_home_link, 'https://www.rw.by/'),
-        (locators.btn_contacts_link, 'https://www.rw.by/corporate/contacts/'),
-        (locators.btn_services_to_passengers, 'https://pass.rw.by/ru/'),
-        (locators.btn_freight_transportation, 'https://www.rw.by/cargo_transportation/'),
-        (locators.btn_tourism_and_rest, 'https://www.rw.by/tourism_and_recreation/'),
-        (locators.btn_corporate, 'https://www.rw.by/corporate/'),
-        (locators.btn_press_center, 'https://www.rw.by/corporate/press_center/')
-    ]
+with allure.step('Проверка на кликабельность'):
+    "Этот тест проверяет ссылки на кликабельность"
+    for elements, links in link_header_elements:
+        check.is_true(elements.is_visible())
+        check.is_true(elements.is_clickable())
+        check.equal(elements.get_attribute('href'), links)
 
-    with allure.step('Проверка')
-
+@allure.story
