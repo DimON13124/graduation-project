@@ -7,7 +7,7 @@ from locators.main_page import MainPage
 
 @allure.story('Тест для проверки главной страницы')
 @allure.feature('Тест для проверки хедера')
-def test_maine_headers(web_browser):
+def test_main_headers(web_browser):
     """Этот тест проверяет хедэр главной страницы"""
 
     locators = MainPage(web_browser)
@@ -53,4 +53,8 @@ with allure.step('Проверка на кликабельность'):
         check.is_true(elements.is_clickable())
         check.equal(elements.get_attribute('href'), links)
 
-@allure.story
+@allure.story('Тест для проверки главной страницы')
+@allure.feature('Тест для проверки футера')
+def test_main_footer(web_browser):
+    "Этот тест проверяет футер страницы"
+
